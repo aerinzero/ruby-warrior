@@ -60,17 +60,17 @@ module RubyWarrior
 
         UI.print "," if n>0
         UI.print "\"turn\":{"
-        UI.print "\"level\":{\""
+        UI.print "\"level\":\""
         
         UI.print @floor.character
         
-        UI.print "\"},"
-        UI.print "\"actions\":{\""
+        UI.print "\","
+        UI.print "\"actions\":\""
         
         @floor.units.each { |unit| unit.prepare_turn }
         @floor.units.each { |unit| unit.perform_turn }
         
-        UI.print "\"}"
+        UI.print "\""
         UI.print "}"
 
         yield if block_given?
