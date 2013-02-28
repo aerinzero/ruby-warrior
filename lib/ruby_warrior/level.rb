@@ -49,7 +49,7 @@ module RubyWarrior
       load_level
       turns.times do |n|
         return if passed? || failed?
-        
+
         # CONSTRUCT JSON OF LEVEL OUTPUT
 
         # turn:
@@ -58,13 +58,14 @@ module RubyWarrior
         #           ------"
         #   actions: "kumavis does nothing"
 
-        UI.print "turn:{"
-        UI.print "level:{\""
+        UI.print "," if n>0
+        UI.print "\"turn\":{"
+        UI.print "\"level\":{\""
         
         UI.print @floor.character
         
-        UI.print "\"}"
-        UI.print "actions:{\""
+        UI.print "\"},"
+        UI.print "\"actions\":{\""
         
         @floor.units.each { |unit| unit.prepare_turn }
         @floor.units.each { |unit| unit.perform_turn }
