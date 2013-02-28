@@ -48,38 +48,41 @@ module RubyWarrior
     def play(turns = 1000)
       load_level
 
-      UI.print "{"
+      # hijack normal output for capturing unit actions
+      oldStream = RubyWarrior::Config.out_stream
+      frameData = []
+
       turns.times do |n|
         return if passed? || failed?
 
-        # CONSTRUCT JSON OF LEVEL OUTPUT
+        # CONSTRUCT frameData OF LEVEL OUTPUT
 
-        # turn:
+        # i:
         #   level: "------
         #           |@  >|
         #           ------"
         #   actions: "kumavis does nothing"
 
-        UI.print "," if n>0
-        levelNum = (n+1).to_s.rjust(3, '0')
-        UI.print "\"turn#{levelNum}\":{"
-        UI.print "\"level\":\""
         
-        UI.print @floor.character
+        # frameNum = (n+1).to_s.rjust(3, '0')
         
-        UI.print "\","
-        UI.print "\"actions\":\""
-        
+        levelMap = @floor.character
+
+        RubyWarrior::Config.out_stream = StringIO.new      
         @floor.units.each { |unit| unit.prepare_turn }
         @floor.units.each { |unit| unit.perform_turn }
-        
-        UI.print "\""
-        UI.print "}"
+        actionsMessage = RubyWarrior::Config.out_stream.string
+
+        frameData.push {levelMap:levelMap,actionsMessage:actionsMessage}        
 
         yield if block_given?
         @time_bonus -= 1 if @time_bonus > 0
       end
-      UI.print "}"
+
+      # resume normal output
+      RubyWarrior::Config.out_stream = oldStream
+
+      frameData
 
     end
     
