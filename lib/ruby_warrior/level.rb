@@ -47,6 +47,8 @@ module RubyWarrior
     
     def play(turns = 1000)
       load_level
+
+      UI.print "{"
       turns.times do |n|
         return if passed? || failed?
 
@@ -59,7 +61,8 @@ module RubyWarrior
         #   actions: "kumavis does nothing"
 
         UI.print "," if n>0
-        UI.print "\"turn\":{"
+        levelNum = (n+1).to_s.rjust(3, '0')
+        UI.print "\"turn#{levelNum}\":{"
         UI.print "\"level\":\""
         
         UI.print @floor.character
@@ -76,6 +79,8 @@ module RubyWarrior
         yield if block_given?
         @time_bonus -= 1 if @time_bonus > 0
       end
+      UI.print "}"
+
     end
     
     def tally_points
