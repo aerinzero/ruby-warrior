@@ -140,6 +140,10 @@ module RubyWarrior
     def profile
       @profile ||= choose_profile
     end
+
+    def profile=(profile)
+      @profile = profile
+    end
     
     def new_profile
       profile = Profile.new
