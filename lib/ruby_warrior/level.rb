@@ -58,10 +58,10 @@ module RubyWarrior
         # CONSTRUCT frameData OF LEVEL OUTPUT
 
         # i:
-        #   level: "------
-        #           |@  >|
-        #           ------"
-        #   actions: "kumavis does nothing"
+        #   levelMap: "------
+        #              |@  >|
+        #              ------"
+        #   actionsMessage: "kumavis does nothing"
 
         
         # frameNum = (n+1).to_s.rjust(3, '0')
@@ -83,8 +83,9 @@ module RubyWarrior
       # resume normal output
       RubyWarrior::Config.out_stream = oldStream
 
-      frameData
+      binding.pry
 
+      frameData
     end
     
     def tally_points
