@@ -73,7 +73,8 @@ module RubyWarrior
         @floor.units.each { |unit| unit.perform_turn }
         actionsMessage = RubyWarrior::Config.out_stream.string
 
-        frameData.push {levelMap:levelMap,actionsMessage:actionsMessage}        
+        frame = {:levelMap => levelMap, :actionsMessage => actionsMessage}
+        frameData.push frame       
 
         yield if block_given?
         @time_bonus -= 1 if @time_bonus > 0
